@@ -15,6 +15,8 @@ SCRIPTS=${KERNELDIR}/kernelscripts
 OUTDIR=${KERNELDIR}/out
 
 # Pick your poison
+export PATH="$TC_DIR/bin:$PATH"
+
 if ! [ -d "$TC_DIR" ]; then
 	echo "Neutron Clang not found! Downloading to $TC_DIR..."
 	mkdir -p "$TC_DIR" && cd "$TC_DIR"
