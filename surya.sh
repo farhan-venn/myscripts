@@ -40,7 +40,8 @@ export OUTFILE=${OUTDIR}/arch/arm64/boot/dtb.img
 export OUTFILE=${OUTDIR}/arch/arm64/boot/dtbo.img
 export KBUILD_BUILD_USER=Niken
 export KBUILD_BUILD_HOST=Farhan
-export PATH="$TC_DIR/bin:$PATH"
+export CLANG_PATH=${KERNELDIR}/clang/clang-r498229b
+export PATH=${CLANG_PATH}/bin:${PATH}
 export ARCH=arm64
 export DATE=$(TZ=Asia/Jakarta date)
 # Kernel groups
@@ -50,7 +51,7 @@ CI_CHANNEL=-1001592026548
 KERNELRELEASE=surya
 
 # Clang is annoying
-export PATH="$TC_DIR/bin:$PATH"
+PATH="${KERNELDIR}/clang/clang-r498229b/bin:${PATH}"
 
 # Set date and time
 DATE=$(TZ=Asia/Jakarta date)
@@ -106,8 +107,8 @@ makekernel() {
 	STRIP=llvm-strip \
 	OBJCOPY=llvm-objcopy \
 	OBJDUMP=llvm-objdump \
-	CROSS_COMPILE="${TC_DIR}/gcc/bin/aarch64-none-linux-gnu-" \
-	CROSS_COMPILE_ARM32="${TC_DIR}/gcc32/bin/arm-none-linux-gnueabihf-"
+	CROSS_COMPILE="${KERNELDIR}/gcc/bin/aarch64-none-linux-gnu-" \
+	CROSS_COMPILE_ARM32="${KERNELDIR}/gcc32/bin/arm-none-linux-gnueabihf-"
     else
 	    make -j$(nproc --all) O=out ARCH=arm64 CROSS_COMPILE="${KERNELDIR}/gcc/bin/aarch64-elf-" CROSS_COMPILE_ARM32="${KERNELDIR}/gcc32/bin/arm-eabi-"
     fi
