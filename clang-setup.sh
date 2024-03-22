@@ -16,22 +16,19 @@ OUTDIR=${KERNELDIR}/out
 COMPILER_TYPES=clang
 
 # Pick your poison
-export PATH="$TC_DIR/bin:$PATH"
-
-if ! [ -d "$TC_DIR" ]; then
-	echo "Neutron Clang not found! Downloading to $TC_DIR..."
-	mkdir -p "$TC_DIR" && cd "$TC_DIR"
-	curl -LO "https://raw.githubusercontent.com/Neutron-Toolchains/antman/main/antman"
-	bash ./antman -S
-	bash ./antman --patch=glibc
-	cd ../..
-	if ! [ -d "$TC_DIR" ]; then
-		echo "Cloning failed! Aborting..."
-		exit 1
-	fi
-fi
-
-cd "$TC_DIR" && bash ./antman -U && cd ../..
+if [[ "${COMPILER_TYPES}" =~ "clang" ]]; then
+        git clone https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86 -b main --depth=1  "${KERNELDIR}/clang"
+	git clone https://github.com/Kyvangka1610/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu --depth=1 "${KERNELDIR}/gcc"
+        git clone https://github.com/Kyvangka1610/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf --depth=1 "${KERNELDIR}/gcc32"
+	COMPILER_STRING='google clang 17'
+        COMPILER_TYPE='google clang 17'
+else
+        # Default to GCC from Arter
+        git clone https://github.com/mvaisakh/gcc-arm64 -b gcc-master --depth=1 "${KERNELDIR}/gcc"
+        git clone https://github.com/kdrag0n/arm-eabi-gcc --depth=1 "${KERNELDIR}/gcc32"
+        COMPILER_STRING='GCC'
+	COMPILER_TYPE='GCC'
+fi    
 
 export COMPILER_STRING COMPILER_TYPE KERNELDIR SCRIPTS OUTDIR
 
