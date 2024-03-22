@@ -13,6 +13,7 @@
 KERNELDIR="$(pwd)"
 SCRIPTS=${KERNELDIR}/kernelscripts
 OUTDIR=${KERNELDIR}/out
+COMPILER_TYPES=clang
 
 # Pick your poison
 export PATH="$TC_DIR/bin:$PATH"
