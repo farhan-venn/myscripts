@@ -8,7 +8,7 @@
 
 # Needed exports
 export TELEGRAM_TOKEN=7156614633:AAEcv-ttSka3mH8wS45usUlpRW4FbqgT8xQ
-export ANYKERNEL=$(pwd)/anykernel3
+export ANYKERNEL=$(pwd)/android/anykernel3
 
 # Avoid hardcoding things
 KERNEL=RavenKernel
